@@ -3,6 +3,7 @@ package com.green.boardver2.board;
 import com.green.boardver2.board.model.BoardGetListRes;
 import com.green.boardver2.board.model.BoardGetOneRes;
 import com.green.boardver2.board.model.BoardPostReq;
+import com.green.boardver2.board.model.BoardPutReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class BoardService {
     public BoardGetOneRes getBoardOne(long p){
         return mapper.getBoardOne(p);
     }
-    public int putBoard(BoardPostReq p){
+    public int putBoard(BoardPutReq p){
         return mapper.putBoard(p);
     }
     public int delBoard(long p){

@@ -8,7 +8,7 @@ public class BoardGetOneRes {
     private String title;
     private String contents;
     private long writerId;
-    private int hit;
+    private int hits;
     private String createdAt;
     private String updatedAt;
 }

@@ -3,6 +3,7 @@ package com.green.boardver2.board;
 import com.green.boardver2.board.model.BoardGetListRes;
 import com.green.boardver2.board.model.BoardGetOneRes;
 import com.green.boardver2.board.model.BoardPostReq;
+import com.green.boardver2.board.model.BoardPutReq;
 import com.green.boardver2.common.ResultDto;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class BoardController {
                 resultMsg(HttpStatus.OK.toString()).
                 resultData(result).build();
     }
+
     @GetMapping
     public ResultDto<List<BoardGetListRes>> getBoardById(){
         List<BoardGetListRes> list = service.getBoardList();
@@ -34,19 +36,28 @@ public class BoardController {
                 resultMsg("").
                 resultData(list).build();
     }
-    @GetMapping("{boardId}")
-    public ResultDto<BoardGetOneRes> getBoardOne(@PathVariable long boardId){
+
+    @GetMapping("{board_id}")
+    public ResultDto<BoardGetOneRes> getBoardOne(@PathVariable(name = "board_id") long boardId){
         BoardGetOneRes result = service.getBoardOne(boardId);
-        return ResultDto.<BoardGetOneRes>builder().statusCode(HttpStatus.OK).resultMsg("").resultData(result).build();
+
+        return ResultDto.<BoardGetOneRes>builder().statusCode(HttpStatus.OK).
+                                    resultMsg(result == null ? "내용을 찾을 수 없습니다." : HttpStatus.OK.toString()).
+                                    resultData(result).build();
     }
+
     @PutMapping
-    public ResultDto<Integer> putBoard(@RequestBody BoardPostReq p){
+    public ResultDto<Integer> putBoard(@RequestBody BoardPutReq p){
         int result = service.putBoard(p);
-        return ResultDto.<Integer>builder().statusCode(HttpStatus.OK).resultMsg("").resultData(result).build();
-    }
+        return ResultDto.<Integer>builder().statusCode(HttpStatus.OK).
+                                        resultMsg(HttpStatus.OK.toString()).
+                                        resultData(result).build();}
+
     @DeleteMapping
     public ResultDto<Integer> delBoard(@RequestParam(name = "board_id") long boradId){
         int result = service.delBoard(boradId);
-        return ResultDto.<Integer>builder().statusCode(HttpStatus.OK).resultMsg("").resultData(result).build();
+        return ResultDto.<Integer>builder().statusCode(HttpStatus.OK).
+                                        resultMsg(HttpStatus.OK.toString()).
+                                        resultData(result).build();
     }
 }

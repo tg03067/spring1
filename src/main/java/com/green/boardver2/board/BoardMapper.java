@@ -12,6 +12,6 @@ public interface BoardMapper {
     int postBoard(BoardPostReq p);
     List<BoardGetListRes> getBoardList();
     BoardGetOneRes getBoardOne(long p);
-    int putBoard(BoardPostReq p);
+    int putBoard(BoardPutReq p);
     int delBoard(long p);
 }

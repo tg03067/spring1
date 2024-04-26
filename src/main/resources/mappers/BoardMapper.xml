@@ -11,12 +11,6 @@
         , writer_id = #{writerId}
     </insert>
 
-    <select id="getBoardById">
-        SELECT board_id AS boardID, title, contents, hits, created_at AS createdAt, updated_at AS updatedAt
-        FROM board
-        WHERE board_id = #{boardId}
-    </select>
-
     <select id="getBoardList">
         SELECT A.board_id AS boardID, A.title, A.hits, B.nm AS writerNm, A.created_at AS createdAt
         FROM board A
@@ -26,24 +20,25 @@
     </select>
 
     <select id="getBoardOne">
-        SELECT A.board_id AS boardID, A.title, A.contents, A.hits, A.created_at AS createdAt , B.nm AS writerNm, A.updated_at AS updatedAt
+        SELECT A.board_id AS boardID, A.title, A.contents, A.hits , A.writer_id AS writerId ,
+        A.created_at AS createdAt , B.nm AS writerNm, A.updated_at AS updatedAt
         FROM board A
         INNER JOIN user B
         ON A.writer_id = B.user_id
         WHERE board_id = #{boardId}
-        ORDER BY A.board_id DESC
     </select>
 
     <update id="putBoard">
         UPDATE board
-        SET updated_at = NOW()
-        <if test=" title != null and title != '' ">
-            , title = #{title}
-        </if>
-        <if test=" contents != null and contents != '' ">
-            , contents = #{contents}
-        </if>
-        WHERE writer_id = #{writerId}
+        <set>
+            <if test=" title != null and title != '' ">
+                title = #{title},
+            </if>
+            <if test=" contents != null and contents != '' ">
+                contents = #{contents},
+            </if>
+        </set>
+        WHERE board_id = #{boardId}
     </update>
 
     <delete id="delBoard">
